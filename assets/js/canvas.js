@@ -114,7 +114,7 @@ function draw(ctx) {
   ctx.clearRect(0, 0, W, H);
 
   // Background
-  ctx.fillStyle = '#0a0a0a';
+  ctx.fillStyle = '#fafaf7';
   ctx.fillRect(0, 0, W, H);
 
   drawGrid(ctx);
@@ -134,7 +134,7 @@ function drawGrid(ctx) {
   const ox = ((camera.x % spacing) + spacing) % spacing;
   const oy = ((camera.y % spacing) + spacing) % spacing;
 
-  ctx.fillStyle = '#1f1f1f';
+  ctx.fillStyle = '#c8c6bd';
   for (let x = ox; x < W; x += spacing) {
     for (let y = oy; y < H; y += spacing) {
       ctx.beginPath();
@@ -157,7 +157,7 @@ function drawEdges(ctx) {
     const [fx, fy] = edgePoint(b, ax, ay);
 
     ctx.save();
-    ctx.strokeStyle = '#3a3a3a';
+    ctx.strokeStyle = '#9a988e';
     ctx.lineWidth = 1 / camera.zoom;
     ctx.setLineDash([4 / camera.zoom, 4 / camera.zoom]);
     ctx.lineCap = 'round';
@@ -193,7 +193,7 @@ function drawArrow(ctx, tx, ty, _x, _y, cx2, cy2) {
   const size = 7 / camera.zoom;
   ctx.save();
   ctx.setLineDash([]);
-  ctx.fillStyle = '#5a5a5a';
+  ctx.fillStyle = '#5a5a55';
   ctx.beginPath();
   ctx.moveTo(tx, ty);
   ctx.lineTo(tx - ux*size + uy*size*0.5, ty - uy*size - ux*size*0.5);
@@ -206,10 +206,13 @@ function drawArrow(ctx, tx, ty, _x, _y, cx2, cy2) {
 function drawNodes(ctx) {
   NODES.forEach(n => {
     const isSelected = selected && selected.id === n.id;
-    const r = 2; // sharp corners — Galbot style
-    const fillColor   = isSelected ? '#1a1a1a' : '#0f0f0f';
-    const borderColor = isSelected ? '#d8d8d8' : '#3a3a3a';
-    const accentColor = isSelected ? '#d8d8d8' : '#888888';
+    const r = 2;
+    const fillColor   = isSelected ? '#0a0a0a' : '#ffffff';
+    const borderColor = isSelected ? '#0a0a0a' : '#9a988e';
+    const titleColor  = isSelected ? '#fafaf7' : '#0a0a0a';
+    const subColor    = isSelected ? '#c8c6bd' : '#555550';
+    const metaColor   = isSelected ? '#9a988e' : '#8e8c83';
+    const sepColor    = isSelected ? '#3a3a35' : '#e2e0d8';
 
     // card fill
     ctx.save();
@@ -219,49 +222,58 @@ function drawNodes(ctx) {
     ctx.fill();
     ctx.restore();
 
+    // soft drop shadow
+    if (!isSelected) {
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,.06)';
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetY = 2;
+      ctx.beginPath();
+      roundRect(ctx, n.x, n.y, n.w, n.h, r);
+      ctx.fillStyle = fillColor;
+      ctx.fill();
+      ctx.restore();
+    }
+
     // border
     ctx.save();
     ctx.beginPath();
     roundRect(ctx, n.x, n.y, n.w, n.h, r);
     ctx.strokeStyle = borderColor;
-    ctx.lineWidth   = isSelected ? 1.5 / camera.zoom : 1 / camera.zoom;
+    ctx.lineWidth   = isSelected ? 2 / camera.zoom : 1 / camera.zoom;
     ctx.stroke();
     ctx.restore();
 
-    // corner brackets (Galbot UI motif)
-    drawCornerBrackets(ctx, n.x, n.y, n.w, n.h, accentColor);
+    // corner brackets
+    drawCornerBrackets(ctx, n.x, n.y, n.w, n.h, isSelected ? '#fafaf7' : '#0a0a0a');
 
-    // top index/label bar
+    // top index
     ctx.save();
     ctx.font = `400 9px "JetBrains Mono", monospace`;
-    ctx.fillStyle = '#5a5a5a';
+    ctx.fillStyle = metaColor;
     ctx.textBaseline = 'top';
     ctx.fillText(`[ NODE / ${n.id.toUpperCase()} ]`, n.x + 14, n.y + 14);
     ctx.restore();
 
-    // big label (Orbitron-like via system fallback — use Inter bold + spacing)
+    // big label
     ctx.save();
     ctx.font = `500 13px "Orbitron", -apple-system, sans-serif`;
-    ctx.fillStyle = '#d8d8d8';
+    ctx.fillStyle = titleColor;
     ctx.textBaseline = 'top';
-    // expand letter spacing manually
-    const label = n.label;
-    let lx = n.x + 14;
-    const ly = n.y + 32;
-    ctx.fillText(label, lx, ly);
+    ctx.fillText(n.label, n.x + 14, n.y + 32);
     ctx.restore();
 
     // chinese sub
     ctx.save();
     ctx.font = `400 11px -apple-system, "PingFang SC", sans-serif`;
-    ctx.fillStyle = '#888888';
+    ctx.fillStyle = subColor;
     ctx.textBaseline = 'top';
     ctx.fillText(n.sub || '', n.x + 14, n.y + 52);
     ctx.restore();
 
-    // separator line
+    // separator
     ctx.save();
-    ctx.strokeStyle = '#2a2a2a';
+    ctx.strokeStyle = sepColor;
     ctx.lineWidth = 1 / camera.zoom;
     ctx.beginPath();
     ctx.moveTo(n.x + 14, n.y + 72);
@@ -272,7 +284,7 @@ function drawNodes(ctx) {
     // desc lines
     ctx.save();
     ctx.font = `400 10px "JetBrains Mono", monospace`;
-    ctx.fillStyle = '#888888';
+    ctx.fillStyle = subColor;
     ctx.textBaseline = 'top';
     const lines = n.desc.split('\n');
     lines.forEach((line, i) => {
@@ -284,7 +296,7 @@ function drawNodes(ctx) {
     if (n.posts && n.posts.length > 0) {
       ctx.save();
       ctx.font = `500 9px "JetBrains Mono", monospace`;
-      ctx.fillStyle = isSelected ? '#d8d8d8' : '#5a5a5a';
+      ctx.fillStyle = metaColor;
       ctx.textBaseline = 'bottom';
       ctx.textAlign = 'right';
       ctx.fillText(`${String(n.posts.length).padStart(2,'0')} ENTRIES`, n.x + n.w - 14, n.y + n.h - 12);
