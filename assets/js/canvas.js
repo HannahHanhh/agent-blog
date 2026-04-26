@@ -4,8 +4,7 @@
 const NODES = [
   {
     id: 'agent-arch', x: -220, y: -160, w: 240, h: 140,
-    icon: '🤖', label: 'Agent 架构', color: '#e8f0fe',
-    border: '#4a90d9',
+    icon: '◆', label: 'ARCHITECTURE', sub: 'Agent 架构',
     desc: 'ReAct · Plan-and-Execute\nMulti-Agent · Tool Use',
     posts: [
       { title: 'ReAct Agent 详解', date: '2026-04-27', tags: ['ReAct', '论文'] },
@@ -14,9 +13,8 @@ const NODES = [
   },
   {
     id: 'llm-core', x: 200, y: -280, w: 220, h: 130,
-    icon: '🧠', label: 'LLM 基础', color: '#f3e8ff',
-    border: '#9b59b6',
-    desc: 'Transformer · 提示工程\n微调 · RLHF',
+    icon: '◇', label: 'LLM CORE', sub: '语言模型',
+    desc: 'Transformer · Prompt\nFine-tune · RLHF',
     posts: [
       { title: 'Attention 机制图解', date: '2026-04-27', tags: ['原理'] },
       { title: 'Chain-of-Thought 提示技巧', date: '2026-04-27', tags: ['提示工程'] },
@@ -24,9 +22,8 @@ const NODES = [
   },
   {
     id: 'engineering', x: 200, y: 60, w: 240, h: 140,
-    icon: '🛠️', label: '工程实践', color: '#e8f8f0',
-    border: '#27ae60',
-    desc: 'RAG · Memory · Evaluation\nMCP · 部署',
+    icon: '◈', label: 'ENGINEERING', sub: '工程实践',
+    desc: 'RAG · Memory · Eval\nMCP · Deployment',
     posts: [
       { title: 'RAG 系统设计', date: '2026-04-27', tags: ['RAG', '工程'] },
       { title: 'Agent 评估框架', date: '2026-04-27', tags: ['评估'] },
@@ -34,9 +31,8 @@ const NODES = [
   },
   {
     id: 'papers', x: -220, y: 100, w: 220, h: 130,
-    icon: '📄', label: '论文笔记', color: '#fff8e8',
-    border: '#e67e22',
-    desc: '顶会精读 · 综述 · 复现\nNeurIPS · ICML · ACL',
+    icon: '◉', label: 'RESEARCH', sub: '论文笔记',
+    desc: 'NeurIPS · ICML · ACL\n精读 · 综述 · 复现',
     posts: [
       { title: 'Toolformer 精读', date: '2026-04-27', tags: ['论文', 'Tool Use'] },
       { title: 'AutoGPT 架构分析', date: '2026-04-27', tags: ['论文'] },
@@ -44,30 +40,26 @@ const NODES = [
   },
   {
     id: 'react-node', x: -460, y: -260, w: 180, h: 100,
-    icon: '⚡', label: 'ReAct', color: '#e8f0fe',
-    border: '#4a90d9',
-    desc: '推理与行动交替\n思维链 + 工具调用',
+    icon: '▸', label: 'ReAct', sub: '推理 · 行动',
+    desc: 'Chain-of-Thought\n+ Tool Calling',
     posts: []
   },
   {
     id: 'multiagent', x: -460, y: -100, w: 180, h: 100,
-    icon: '🔗', label: 'Multi-Agent', color: '#e8f0fe',
-    border: '#4a90d9',
-    desc: '协作 · 竞争 · 分工\nCrew AI · AutoGen',
+    icon: '▸', label: 'MULTI-AGENT', sub: '多智能体',
+    desc: 'Crew AI · AutoGen\n协作 · 竞争',
     posts: []
   },
   {
     id: 'rag-node', x: 480, y: -80, w: 180, h: 100,
-    icon: '🗂️', label: 'RAG', color: '#e8f8f0',
-    border: '#27ae60',
-    desc: '检索增强生成\nVector DB · Reranker',
+    icon: '▸', label: 'RAG', sub: '检索增强',
+    desc: 'Vector DB\nReranker · Hybrid',
     posts: []
   },
   {
     id: 'memory-node', x: 480, y: 80, w: 180, h: 100,
-    icon: '💾', label: 'Memory', color: '#e8f8f0',
-    border: '#27ae60',
-    desc: '短期 · 长期 · 外部存储\nEM · MemGPT',
+    icon: '▸', label: 'MEMORY', sub: '记忆机制',
+    desc: 'Short / Long-term\nMemGPT · External',
     posts: []
   },
 ];
@@ -122,7 +114,7 @@ function draw(ctx) {
   ctx.clearRect(0, 0, W, H);
 
   // Background
-  ctx.fillStyle = '#f7f7f5';
+  ctx.fillStyle = '#0a0a0a';
   ctx.fillRect(0, 0, W, H);
 
   drawGrid(ctx);
@@ -142,11 +134,11 @@ function drawGrid(ctx) {
   const ox = ((camera.x % spacing) + spacing) % spacing;
   const oy = ((camera.y % spacing) + spacing) % spacing;
 
-  ctx.fillStyle = '#d0cfc8';
+  ctx.fillStyle = '#1f1f1f';
   for (let x = ox; x < W; x += spacing) {
     for (let y = oy; y < H; y += spacing) {
       ctx.beginPath();
-      ctx.arc(x, y, 1.1, 0, Math.PI * 2);
+      ctx.arc(x, y, 1, 0, Math.PI * 2);
       ctx.fill();
     }
   }
@@ -161,29 +153,24 @@ function drawEdges(ctx) {
     const ax = a.x + a.w / 2, ay = a.y + a.h / 2;
     const bx = b.x + b.w / 2, by = b.y + b.h / 2;
 
-    // exit/enter points on card edges
     const [ex, ey] = edgePoint(a, bx, by);
     const [fx, fy] = edgePoint(b, ax, ay);
 
     ctx.save();
-    ctx.strokeStyle = '#b0afa8';
-    ctx.lineWidth = 1.5 / camera.zoom;
-    ctx.setLineDash([6 / camera.zoom, 4 / camera.zoom]);
+    ctx.strokeStyle = '#3a3a3a';
+    ctx.lineWidth = 1 / camera.zoom;
+    ctx.setLineDash([4 / camera.zoom, 4 / camera.zoom]);
     ctx.lineCap = 'round';
 
     ctx.beginPath();
     ctx.moveTo(ex, ey);
-
-    // gentle cubic bezier
     const dx = fx - ex, dy = fy - ey;
     const cx1 = ex + dx * 0.45, cy1 = ey;
     const cx2 = fx - dx * 0.45, cy2 = fy;
     ctx.bezierCurveTo(cx1, cy1, cx2, cy2, fx, fy);
     ctx.stroke();
 
-    // arrowhead
     drawArrow(ctx, fx, fy, fx - cx2 * 0.01, fy - cy2 * 0.01, cx2, cy2);
-
     ctx.restore();
   });
 }
@@ -200,14 +187,13 @@ function edgePoint(node, tx, ty) {
 }
 
 function drawArrow(ctx, tx, ty, _x, _y, cx2, cy2) {
-  // direction from last control point to tip
   const dx = tx - cx2, dy = ty - cy2;
   const len = Math.sqrt(dx*dx + dy*dy) || 1;
   const ux = dx/len, uy = dy/len;
-  const size = 8 / camera.zoom;
+  const size = 7 / camera.zoom;
   ctx.save();
   ctx.setLineDash([]);
-  ctx.fillStyle = '#b0afa8';
+  ctx.fillStyle = '#5a5a5a';
   ctx.beginPath();
   ctx.moveTo(tx, ty);
   ctx.lineTo(tx - ux*size + uy*size*0.5, ty - uy*size - ux*size*0.5);
@@ -220,18 +206,16 @@ function drawArrow(ctx, tx, ty, _x, _y, cx2, cy2) {
 function drawNodes(ctx) {
   NODES.forEach(n => {
     const isSelected = selected && selected.id === n.id;
-    const r = 14;
-
-    // shadow
-    ctx.save();
-    ctx.shadowColor = isSelected ? n.border : 'rgba(0,0,0,.12)';
-    ctx.shadowBlur  = isSelected ? 20 : 10;
-    ctx.shadowOffsetY = 3;
+    const r = 2; // sharp corners — Galbot style
+    const fillColor   = isSelected ? '#1a1a1a' : '#0f0f0f';
+    const borderColor = isSelected ? '#d8d8d8' : '#3a3a3a';
+    const accentColor = isSelected ? '#d8d8d8' : '#888888';
 
     // card fill
+    ctx.save();
     ctx.beginPath();
     roundRect(ctx, n.x, n.y, n.w, n.h, r);
-    ctx.fillStyle = n.color;
+    ctx.fillStyle = fillColor;
     ctx.fill();
     ctx.restore();
 
@@ -239,65 +223,92 @@ function drawNodes(ctx) {
     ctx.save();
     ctx.beginPath();
     roundRect(ctx, n.x, n.y, n.w, n.h, r);
-    ctx.strokeStyle = isSelected ? n.border : n.border + '99';
-    ctx.lineWidth   = isSelected ? 2.5 / camera.zoom : 1.5 / camera.zoom;
+    ctx.strokeStyle = borderColor;
+    ctx.lineWidth   = isSelected ? 1.5 / camera.zoom : 1 / camera.zoom;
     ctx.stroke();
     ctx.restore();
 
-    // top color bar
+    // corner brackets (Galbot UI motif)
+    drawCornerBrackets(ctx, n.x, n.y, n.w, n.h, accentColor);
+
+    // top index/label bar
     ctx.save();
-    ctx.beginPath();
-    roundRect(ctx, n.x, n.y, n.w, 5, [r, r, 0, 0]);
-    ctx.fillStyle = n.border;
-    ctx.fill();
+    ctx.font = `400 9px "JetBrains Mono", monospace`;
+    ctx.fillStyle = '#5a5a5a';
+    ctx.textBaseline = 'top';
+    ctx.fillText(`[ NODE / ${n.id.toUpperCase()} ]`, n.x + 14, n.y + 14);
     ctx.restore();
 
-    // icon + label
-    const fs = Math.max(8, Math.min(16, 14));
+    // big label (Orbitron-like via system fallback — use Inter bold + spacing)
     ctx.save();
-    ctx.font = `bold ${fs}px -apple-system, "PingFang SC", sans-serif`;
-    ctx.fillStyle = '#1a1a1a';
+    ctx.font = `500 13px "Orbitron", -apple-system, sans-serif`;
+    ctx.fillStyle = '#d8d8d8';
     ctx.textBaseline = 'top';
+    // expand letter spacing manually
+    const label = n.label;
+    let lx = n.x + 14;
+    const ly = n.y + 32;
+    ctx.fillText(label, lx, ly);
+    ctx.restore();
 
-    const iconSize = 18;
-    ctx.font = `${iconSize}px serif`;
-    ctx.fillText(n.icon, n.x + 14, n.y + 16);
+    // chinese sub
+    ctx.save();
+    ctx.font = `400 11px -apple-system, "PingFang SC", sans-serif`;
+    ctx.fillStyle = '#888888';
+    ctx.textBaseline = 'top';
+    ctx.fillText(n.sub || '', n.x + 14, n.y + 52);
+    ctx.restore();
 
-    ctx.font = `bold ${fs}px -apple-system, "PingFang SC", sans-serif`;
-    ctx.fillStyle = '#1a1a1a';
-    ctx.fillText(n.label, n.x + 14 + iconSize + 6, n.y + 18);
+    // separator line
+    ctx.save();
+    ctx.strokeStyle = '#2a2a2a';
+    ctx.lineWidth = 1 / camera.zoom;
+    ctx.beginPath();
+    ctx.moveTo(n.x + 14, n.y + 72);
+    ctx.lineTo(n.x + n.w - 14, n.y + 72);
+    ctx.stroke();
     ctx.restore();
 
     // desc lines
     ctx.save();
-    ctx.font = `${Math.max(7, Math.min(12, 11))}px -apple-system, "PingFang SC", sans-serif`;
-    ctx.fillStyle = '#555';
+    ctx.font = `400 10px "JetBrains Mono", monospace`;
+    ctx.fillStyle = '#888888';
+    ctx.textBaseline = 'top';
     const lines = n.desc.split('\n');
     lines.forEach((line, i) => {
-      ctx.fillText(line, n.x + 14, n.y + 44 + i * 16);
+      ctx.fillText(line, n.x + 14, n.y + 80 + i * 14);
     });
     ctx.restore();
 
-    // post count badge
+    // post count
     if (n.posts && n.posts.length > 0) {
       ctx.save();
-      const bw = 56, bh = 18;
-      const bx = n.x + n.w - bw - 10, by = n.y + n.h - bh - 10;
-      ctx.beginPath();
-      roundRect(ctx, bx, by, bw, bh, 9);
-      ctx.fillStyle = n.border + '22';
-      ctx.fill();
-      ctx.strokeStyle = n.border + '66';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-      ctx.font = `600 10px -apple-system, "PingFang SC", sans-serif`;
-      ctx.fillStyle = n.border;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(`${n.posts.length} 篇`, bx + bw/2, by + bh/2);
+      ctx.font = `500 9px "JetBrains Mono", monospace`;
+      ctx.fillStyle = isSelected ? '#d8d8d8' : '#5a5a5a';
+      ctx.textBaseline = 'bottom';
+      ctx.textAlign = 'right';
+      ctx.fillText(`${String(n.posts.length).padStart(2,'0')} ENTRIES`, n.x + n.w - 14, n.y + n.h - 12);
       ctx.restore();
     }
   });
+}
+
+function drawCornerBrackets(ctx, x, y, w, h, color) {
+  const sz = 8;
+  ctx.save();
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 1.2 / camera.zoom;
+  ctx.beginPath();
+  // top-left
+  ctx.moveTo(x, y + sz);     ctx.lineTo(x, y);     ctx.lineTo(x + sz, y);
+  // top-right
+  ctx.moveTo(x + w - sz, y); ctx.lineTo(x + w, y); ctx.lineTo(x + w, y + sz);
+  // bottom-left
+  ctx.moveTo(x, y + h - sz); ctx.lineTo(x, y + h); ctx.lineTo(x + sz, y + h);
+  // bottom-right
+  ctx.moveTo(x + w - sz, y + h); ctx.lineTo(x + w, y + h); ctx.lineTo(x + w, y + h - sz);
+  ctx.stroke();
+  ctx.restore();
 }
 
 function roundRect(ctx, x, y, w, h, r) {
