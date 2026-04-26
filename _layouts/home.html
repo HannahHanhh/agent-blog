@@ -1,12 +1,15 @@
 ---
-layout: default
+layout: graph
 ---
-<div class="graph-page">
-  <div id="graph-canvas"></div>
+<div class="canvas-page">
+  <canvas id="obs-canvas"></canvas>
 
-  <div id="graph-hint">拖拽移动 · 滚轮缩放 · 点击节点查看详情</div>
+  <div class="canvas-toolbar">
+    <span>拖拽移动 &nbsp;·&nbsp; 滚轮缩放 &nbsp;·&nbsp; 点击节点查看详情</span>
+    <div class="toolbar-divider"></div>
+    <button id="btn-fit">重置视图</button>
+  </div>
 
-  <!-- Side panel -->
   <aside id="side-panel">
     <div class="panel-header">
       <div class="panel-header-text">
@@ -20,5 +23,4 @@ layout: default
   </aside>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
-<script src="{{ '/assets/js/graph.js' | relative_url }}"></script>
+<script src="{{ '/assets/js/canvas.js' | relative_url }}"></script>

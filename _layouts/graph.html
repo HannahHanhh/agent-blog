@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <title>{{ site.title }}</title>
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   {% seo %}
 </head>
-<body class="regular-page">
+<body>
   <header class="site-header">
     <nav class="nav-container">
       <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
@@ -21,9 +21,5 @@
   </header>
 
   {{ content }}
-
-  <footer class="site-footer">
-    © {{ 'now' | date: "%Y" }} {{ site.title }} · Powered by Jekyll & GitHub Pages
-  </footer>
 </body>
 </html>
