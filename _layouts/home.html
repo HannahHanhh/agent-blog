@@ -39,8 +39,8 @@ layout: default
         从底层架构到工程实践，从前沿论文到落地经验。<br>
         为下一代智能体而构建。
       </p>
-      <a class="hero-cta" href="{{ '/posts/' | relative_url }}">
-        浏览文章 <span class="arrow">→</span>
+      <a class="hero-cta" href="{{ '/graph/' | relative_url }}">
+        进入图谱 <span class="arrow">→</span>
       </a>
     </div>
   </section>
@@ -97,7 +97,6 @@ layout: default
   <section class="posts-section">
     <div class="section-header">
       <span class="section-title">Recent Transmissions</span>
-      <a class="section-link" href="{{ '/posts/' | relative_url }}">[ ALL POSTS → ]</a>
     </div>
     {% for post in site.posts limit:8 %}
     <a class="post-row" href="{{ post.url | relative_url }}">
