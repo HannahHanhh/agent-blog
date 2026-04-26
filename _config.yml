@@ -1,0 +1,27 @@
+title: Agent Knowledge Base
+description: 探索 AI Agent 的知识与实践
+baseurl: ""
+url: "https://xiaohan.github.io"
+
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+permalink: /:year/:month/:day/:title/
+
+kramdown:
+  syntax_highlighter: rouge
+  input: GFM
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .bundle
+  - _interviews

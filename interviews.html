@@ -1,0 +1,37 @@
+---
+layout: default
+title: 面试记录
+permalink: /interviews/
+---
+
+<div id="password-gate" class="password-gate">
+  <h2>🔒 面试记录</h2>
+  <p>此页面受密码保护，请输入密码继续。</p>
+  <form id="password-form">
+    <input type="password" id="password-input" placeholder="请输入密码" autocomplete="current-password" required />
+    <button type="submit">解锁</button>
+    <p class="error" id="password-error">密码错误，请重试。</p>
+  </form>
+</div>
+
+<div id="interviews-content">
+  <h1>面试记录</h1>
+  <p style="color: var(--text-muted); margin-bottom: 1.5rem;">记录各公司 AI / Agent 相关岗位的面试过程与心得。</p>
+
+  <ul class="interview-list">
+    <li class="interview-item">
+      <h3>示例：某公司 AI Researcher 岗位</h3>
+      <p class="meta">
+        时间：2026-04-01 &nbsp;|&nbsp; 轮次：技术一面 &nbsp;|&nbsp;
+        <span class="result-pending">等待结果</span>
+      </p>
+      <p>在这里记录面试题目、考察点和复盘内容。</p>
+    </li>
+  </ul>
+
+  <p style="margin-top:2rem; color: var(--text-muted); font-size:.85rem;">
+    如需添加新的面试记录，直接编辑 <code>interviews.html</code> 文件中的列表。
+  </p>
+</div>
+
+<script src="{{ '/assets/js/interviews.js' | relative_url }}"></script>
