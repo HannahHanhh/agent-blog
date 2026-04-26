@@ -1,7 +1,7 @@
 // Password-protected interviews page
 // The hash below is SHA-256 of your password.
 // To update: run `echo -n "yourpassword" | shasum -a 256` and replace the value.
-const PASSWORD_HASH = "REPLACE_WITH_YOUR_SHA256_HASH";
+const PASSWORD_HASH = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
 
 async function sha256(message) {
   const msgBuffer = new TextEncoder().encode(message);

@@ -1,49 +1,24 @@
 ---
 layout: default
 ---
-<div class="home">
-  <section class="hero">
-    <h1>Agent Knowledge Base</h1>
-    <p>记录 AI Agent 领域的知识、论文笔记与工程实践</p>
-  </section>
+<div class="graph-page">
+  <div id="graph-canvas"></div>
 
-  <section class="categories">
-    <div class="category-grid">
-      <div class="category-card">
-        <h3>🤖 Agent 架构</h3>
-        <p>ReAct、Plan-and-Execute、Multi-Agent 等框架解析</p>
+  <div id="graph-hint">拖拽移动 · 滚轮缩放 · 点击节点查看详情</div>
+
+  <!-- Side panel -->
+  <aside id="side-panel">
+    <div class="panel-header">
+      <div class="panel-header-text">
+        <div class="icon" id="panel-icon"></div>
+        <h2 id="panel-title"></h2>
+        <p id="panel-desc"></p>
       </div>
-      <div class="category-card">
-        <h3>🧠 LLM 基础</h3>
-        <p>大语言模型原理、提示工程、微调技术</p>
-      </div>
-      <div class="category-card">
-        <h3>🛠️ 工程实践</h3>
-        <p>工具调用、RAG、记忆机制、评估方法</p>
-      </div>
-      <div class="category-card">
-        <h3>📄 论文笔记</h3>
-        <p>顶会论文精读与总结</p>
-      </div>
+      <button class="panel-close" id="panel-close">✕</button>
     </div>
-  </section>
-
-  <section class="recent-posts">
-    <h2>最新文章</h2>
-    <ul class="post-list">
-      {% for post in site.posts limit:10 %}
-      <li class="post-item">
-        <span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span>
-        <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
-        {% if post.tags %}
-        <span class="post-tags">
-          {% for tag in post.tags %}
-          <span class="tag">{{ tag }}</span>
-          {% endfor %}
-        </span>
-        {% endif %}
-      </li>
-      {% endfor %}
-    </ul>
-  </section>
+    <div class="panel-body" id="panel-posts"></div>
+  </aside>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="{{ '/assets/js/graph.js' | relative_url }}"></script>
