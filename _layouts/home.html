@@ -1,26 +1,118 @@
 ---
-layout: graph
+layout: default
 ---
-<div class="canvas-page">
-  <canvas id="obs-canvas"></canvas>
+<div class="home">
 
-  <div class="canvas-toolbar">
-    <span>拖拽移动 &nbsp;·&nbsp; 滚轮缩放 &nbsp;·&nbsp; 点击节点查看详情</span>
-    <div class="toolbar-divider"></div>
-    <button id="btn-fit">重置视图</button>
-  </div>
-
-  <aside id="side-panel">
-    <div class="panel-header">
-      <div class="panel-header-text">
-        <div class="icon" id="panel-icon"></div>
-        <h2 id="panel-title"></h2>
-        <p id="panel-desc"></p>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <p class="hero-eyebrow">Knowledge Base · Vol. 01</p>
+      <h1 class="hero-title">
+        A<span class="accent">·</span><br>
+        GEN<br>
+        T
+      </h1>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="num">{{ site.posts | size }}</div>
+          <div class="label">文章</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">4</div>
+          <div class="label">知识领域</div>
+        </div>
+        <div class="stat-item">
+          <div class="num">2026</div>
+          <div class="label">持续更新</div>
+        </div>
       </div>
-      <button class="panel-close" id="panel-close">✕</button>
     </div>
-    <div class="panel-body" id="panel-posts"></div>
-  </aside>
-</div>
+    <div class="hero-right">
+      <p class="hero-desc">
+        记录 AI Agent 领域的架构、工程与论文——<br>
+        从 ReAct 到 Multi-Agent，从提示工程到 RAG，<br>
+        系统整理，持续演进。
+      </p>
+      <a class="hero-cta" href="{{ '/posts/' | relative_url }}">
+        浏览所有文章 <span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
 
-<script src="{{ '/assets/js/canvas.js' | relative_url }}"></script>
+  <!-- DOMAINS -->
+  <section class="domains">
+    <div class="domain-card">
+      <div class="domain-index">01</div>
+      <div class="domain-icon">🤖</div>
+      <div class="domain-name">Agent 架构</div>
+      <div class="domain-desc">从单体 Agent 到多智能体协作系统的设计范式</div>
+      <div class="domain-tags">
+        <span class="domain-tag">ReAct</span>
+        <span class="domain-tag">Plan & Execute</span>
+        <span class="domain-tag">Multi-Agent</span>
+      </div>
+    </div>
+    <div class="domain-card">
+      <div class="domain-index">02</div>
+      <div class="domain-icon">🧠</div>
+      <div class="domain-name">LLM 基础</div>
+      <div class="domain-desc">Transformer 原理、提示工程与微调技术</div>
+      <div class="domain-tags">
+        <span class="domain-tag">Attention</span>
+        <span class="domain-tag">CoT</span>
+        <span class="domain-tag">RLHF</span>
+      </div>
+    </div>
+    <div class="domain-card">
+      <div class="domain-index">03</div>
+      <div class="domain-icon">🛠️</div>
+      <div class="domain-name">工程实践</div>
+      <div class="domain-desc">RAG、Memory、Tool Use 与评估体系的落地经验</div>
+      <div class="domain-tags">
+        <span class="domain-tag">RAG</span>
+        <span class="domain-tag">Memory</span>
+        <span class="domain-tag">Eval</span>
+      </div>
+    </div>
+    <div class="domain-card">
+      <div class="domain-index">04</div>
+      <div class="domain-icon">📄</div>
+      <div class="domain-name">论文笔记</div>
+      <div class="domain-desc">顶会论文精读、综述与核心思路复现</div>
+      <div class="domain-tags">
+        <span class="domain-tag">NeurIPS</span>
+        <span class="domain-tag">ICML</span>
+        <span class="domain-tag">ACL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- RECENT POSTS -->
+  <section class="posts-section">
+    <div class="section-header">
+      <span class="section-title">最新文章</span>
+      <a class="section-link" href="{{ '/posts/' | relative_url }}">查看全部 →</a>
+    </div>
+    {% for post in site.posts limit:8 %}
+    <a class="post-row" href="{{ post.url | relative_url }}">
+      <span class="date">{{ post.date | date: "%Y-%m-%d" }}</span>
+      <span class="title">{{ post.title }}</span>
+      <span class="tags">
+        {% for tag in post.tags limit:2 %}
+        <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </span>
+    </a>
+    {% endfor %}
+  </section>
+
+  <!-- GRAPH PROMO -->
+  <a class="graph-promo" href="{{ '/graph/' | relative_url }}">
+    <div class="graph-promo-left">
+      <h2>探索知识图谱</h2>
+      <p>以节点与连线的形式，直观呈现知识之间的关联</p>
+    </div>
+    <span class="graph-promo-arrow">→</span>
+  </a>
+
+</div>

@@ -4,18 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% if page.title %}{{ page.title }} | {% endif %}{{ site.title }}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
   {% seo %}
 </head>
 <body class="regular-page">
   <header class="site-header">
     <nav class="nav-container">
-      <a class="site-title" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      <a class="site-title" href="{{ '/' | relative_url }}">Agent KB</a>
       <ul class="nav-links">
-        <li><a href="{{ '/' | relative_url }}">图谱</a></li>
+        <li><a href="{{ '/' | relative_url }}">首页</a></li>
         <li><a href="{{ '/posts/' | relative_url }}">文章</a></li>
+        <li><a href="{{ '/graph/' | relative_url }}">图谱</a></li>
+        <li><a href="{{ '/interviews/' | relative_url }}">面试</a></li>
         <li><a href="{{ '/about/' | relative_url }}">关于</a></li>
-        <li><a href="{{ '/interviews/' | relative_url }}">面试记录</a></li>
       </ul>
     </nav>
   </header>
@@ -23,7 +27,8 @@
   {{ content }}
 
   <footer class="site-footer">
-    © {{ 'now' | date: "%Y" }} {{ site.title }} · Powered by Jekyll & GitHub Pages
+    <span>Agent KB</span>
+    <span>© {{ 'now' | date: "%Y" }} · Powered by Jekyll</span>
   </footer>
 </body>
 </html>

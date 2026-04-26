@@ -1,0 +1,28 @@
+---
+layout: graph
+title: 知识图谱
+permalink: /graph/
+---
+<div class="canvas-page">
+  <canvas id="obs-canvas"></canvas>
+
+  <div class="canvas-toolbar">
+    <span>拖拽移动 · 滚轮缩放 · 点击节点查看详情</span>
+    <div class="toolbar-divider"></div>
+    <button id="btn-fit">重置视图</button>
+  </div>
+
+  <aside id="side-panel">
+    <div class="panel-header">
+      <div class="panel-header-text">
+        <div class="icon" id="panel-icon"></div>
+        <h2 id="panel-title"></h2>
+        <p id="panel-desc"></p>
+      </div>
+      <button class="panel-close" id="panel-close">✕</button>
+    </div>
+    <div class="panel-body" id="panel-posts"></div>
+  </aside>
+</div>
+
+<script src="{{ '/assets/js/canvas.js' | relative_url }}"></script>
